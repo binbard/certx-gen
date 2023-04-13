@@ -6,11 +6,24 @@ dialog{
     visibility: hidden;
 }
 
-#cview{
+#dview{
     visibility: hidden;
 }
 
 #tempView{
     cursor: crosshair;
+    border: 1px solid black;
+}
 
+#inputid, #inputname{
+    display: inline;
+    max-width: 100%;
+    scale: 0.6;
+    margin-left: -2.2em;
+}
+
+.cin{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    display: none;
 }
