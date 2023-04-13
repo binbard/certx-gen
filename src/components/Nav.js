@@ -22,7 +22,7 @@ export default function Nav() {
             </ul>
             {isLoggedIn ? (
                     <ul>
-                        <li><a href="#" class="secondary" onClick={() => { navigate("/dashboard") }}>
+                        <li><a href="#" class="secondary" onClick={() => { navigate("/dashboard/events") }}>
                         <sup>({userid}) </sup>
                             Dashboard
                             </a></li>

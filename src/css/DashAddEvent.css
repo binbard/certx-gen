@@ -1,0 +1,16 @@
+.content{
+    padding-right: 20px;
+}
+
+dialog{
+    visibility: hidden;
+}
+
+#cview{
+    visibility: hidden;
+}
+
+#tempView{
+    cursor: crosshair;
+
+}

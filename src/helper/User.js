@@ -1,7 +1,7 @@
 const userInfo = {}
 
 function setUser(userid, userpass, rem) {
-    if(rem == true) {
+    if (rem == true) {
         localStorage.setItem("userid", userid);
         localStorage.setItem("userpass", userpass);
     }
@@ -35,6 +35,9 @@ function isLoggedIn() {
 function logout() {
     userInfo.userid = undefined;
     userInfo.userpass = undefined;
+    localStorage.removeItem("userid");
+    localStorage.removeItem("userpass");
+    window.location.href = "/"
 }
 
 const userQuery = { setUser, getUser, isLoggedIn, logout }
