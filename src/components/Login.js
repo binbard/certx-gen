@@ -23,7 +23,9 @@ export default function Login() {
             navigate("/dashboard");
         }
         else {
-            document.getElementById("login-msg").style.display = "block";
+            let msg = document.getElementById("login-msg");
+            msg.style.color = "red";
+            msg.style.visibility = "visible";
         }
     }
 

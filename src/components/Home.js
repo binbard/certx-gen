@@ -12,7 +12,7 @@ export default function Home() {
                     eCertify - The Ultimate Certificate Generator
                 </h1>
                 <button>
-                    <a href="/download" id="btn-gs">Download your Certificate</a>
+                    <a href="download" id="btn-gs">Download your Certificate</a>
                 </button>
                 <ul>
                     <li>

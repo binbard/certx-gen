@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import DashEvents from "./components/DashEvents";
 import DashAddEvent from "./components/DashAddEvent";
+import DownloadCert from "./components/DownloadCert";
 
 function MRouter() {
     return (
@@ -19,6 +20,7 @@ function MRouter() {
                 <Route path="add-event" element={<DashAddEvent />} />
                 <Route path="settings" element={<DashEvents />} />
             </Route>
+            <Route path="download" element={<DownloadCert />} />
         </Routes>
     );
 }
