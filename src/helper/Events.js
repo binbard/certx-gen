@@ -11,7 +11,7 @@ async function getEvents() {
     }
     const data = await updateUtils.fetchEvents();
     if (data.data === undefined) {
-        eventsList = undefined;
+        return null
     } else {
         eventsList = data.data.events;
     }

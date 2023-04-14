@@ -15,21 +15,21 @@ export default function Nav() {
     return (
         <nav>
             <ul>
-                <li><a href="#" class="secondary" onClick={() => { navigate("/") }}>Home</a></li>
+                <li><a href="#" className="secondary" onClick={() => { navigate("/") }}>Home</a></li>
             </ul>
             <ul>
                 <li><>eCertify</></li>
             </ul>
             {isLoggedIn ? (
                     <ul>
-                        <li><a href="#" class="secondary" onClick={() => { navigate("/dashboard/events") }}>
+                        <li><a href="#" className="secondary" onClick={() => { navigate("/dashboard/events") }}>
                         <sup>({userid}) </sup>
                             Dashboard
                             </a></li>
                     </ul>
             ) : (
                 <ul>
-                    <li><a href="#" class="secondary" onClick={() => { navigate("/login") }}>Login</a></li>
+                    <li><a href="#" className="secondary" onClick={() => { navigate("/login") }}>Login</a></li>
                 </ul>
             )}
         </nav>

@@ -22,7 +22,7 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <div class="dashboard">
+        <div className="dashboard">
             <Dashmenu />
             <Outlet />
         </div>

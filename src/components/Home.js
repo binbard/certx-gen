@@ -6,8 +6,8 @@ import userInfo from '../helper/User.js'
 export default function Home() {
     
     return (
-        <div class="home">
-            <div class="content">
+        <div className="home">
+            <div className="content">
                 <h1>
                     eCertify - The Ultimate Certificate Generator
                 </h1>

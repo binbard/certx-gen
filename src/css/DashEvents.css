@@ -1,5 +1,6 @@
 div.events{
     float: right;
+    min-height: 100vh;
 }
 
 .subtitle{

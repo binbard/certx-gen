@@ -1,3 +1,7 @@
+.add-event{
+    min-height: 100vh;
+}
+
 .content{
     padding-right: 20px;
 }
@@ -26,4 +30,9 @@ dialog{
     display: grid;
     grid-template-columns: 1fr 1fr;
     display: none;
+}
+
+#submit-msg{
+    text-align: center;
+    visibility: hidden;
 }

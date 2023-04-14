@@ -13,7 +13,7 @@ export default function DashEvents() {
     React.useEffect(() => {
         const fetchData = async () => {
             const data = await eventUtils.getEvents();
-            if (data === undefined) setEventList([]);
+            if (data === null) setEventList([]);
             else setEventList(data);
         }
         fetchData();

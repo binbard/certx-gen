@@ -8,7 +8,6 @@ import CSVToJson from './DashAddEventParticipants'
 
 
 export default function DashAddEvent() {
-    const navigate = useNavigate()
 
     const [pos, setPos] = React.useState({ x: 0, y: 0 });
     const [imgx, setImgx] = React.useState(null);
@@ -19,22 +18,22 @@ export default function DashAddEvent() {
     }
 
     return (
-        <div class="add-event">
-            <h2 class="subtitle">Add Event</h2>
-            <div class="content">
+        <div className="add-event">
+            <h2 className="subtitle">Add Event</h2>
+            <div className="content">
                 <form onSubmit={(e) => { e.preventDefault(); certUtils.handleSubmit(pos, participants) }}>
-                    <div class="grid">
-                        <label for="event_name">Event Name
+                    <div className="grid">
+                        <label htmlFor="event_name">Event Name
                             <input type="text" id="inputeventname" name="event_name" placeholder="ABC Workshop" required />
                         </label>
                     </div>
 
-                    <label for="file1">Choose Participant List
+                    <label htmlFor="file1">Choose Participant List
                         <input type="file" id="file1" accept=".csv, .txt" name="file1"
                             onChange={() => certUtils.selectFields(setParticipants)} required />
                     </label>
 
-                    <div class="cin">
+                    <div className="cin">
                         <sub>Select ID Field:</sub>
                         <sub>Select Name Field:</sub>
                         <select id="inputid" required
@@ -43,8 +42,8 @@ export default function DashAddEvent() {
                             onChange={() => certUtils.updateParticipants(setParticipants)} ></select>
                     </div>
 
-                    <label for="cert">
-                        Choose Certificate Template <a href="https://imgur.com/upload" target="_blank">[Upload & link]</a>
+                    <label htmlFor="cert">
+                        Certificate Link [<a href="https://imgur.com/upload" target="_blank">Upload</a> & paste shareable link]
                         <input type="text" id="inputcert" name="cert" placeholder="https://imgur.com/5toV60A"
                             onChange={() => certUtils.selectPos(setPos, setImgx)} required />
                     </label>
@@ -54,9 +53,11 @@ export default function DashAddEvent() {
                     <sub id="dview" onClick={makeDownload}><a>&nbsp;&nbsp;&nbsp;View sample certificate</a></sub>
                     <img id="tempView" src="" />
 
-                    <label for="date">Date
+                    <label htmlFor="date">Date
                         <input type="date" id="inputdate" name="date" required />
                     </label>
+                    
+                    <p id="submit-msg"></p>
 
                     <button type="submit">CREATE</button>
 

@@ -27,7 +27,13 @@ function DownloadSample(imgx, name, nx, ny) {
 }
 
 function convertImgurUrl(url) {
-    if (url.startsWith('https://imgur.com/')) {
+    if (url.startsWith('https://imgur.com/a/')) {
+        const urlParts = url.split('/');
+        const imageId = urlParts[4];
+        const newUrl = `https://i.imgur.com/${imageId}.jpeg`;
+        return newUrl;
+    }
+    else if (url.startsWith('https://imgur.com/')) {
         const urlParts = url.split('/');
         const domain = urlParts[2];
         const imageId = urlParts[3];
@@ -126,8 +132,22 @@ function updateParticipants(setParticipants) {
 
 function handleSubmit(pos, parti) {
     const data = updateUtils.composeData(pos, parti)
-    updateUtils.saveEventData(data)
-    console.log(data)
+    updateUtils.saveEventData(data).then((up) => {
+        console.log(data)
+        console.log(up)
+        const msg = document.getElementById('submit-msg');
+        if (up === 0) {
+            msg.innerHTML = "Event Updated!"
+            msg.style.color = 'red'
+        }
+        else if (up === 1) {
+            msg.innerHTML = "New Event Created!"
+            msg.style.color = 'green'
+        }
+        msg.style.visibility = 'visible';
+    })
+
+
 }
 
 

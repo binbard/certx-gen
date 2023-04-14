@@ -2,7 +2,7 @@ import * as Realm from 'realm-web';
 import userQuery from './User';
 
 const app = userQuery.app
-
+const graphqlUri = 'https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql'
 
 async function saveEventData(data) {
     if (!app.currentUser) {
@@ -29,9 +29,11 @@ async function saveEventData(data) {
 
     if (!result.matchedCount) {
         console.log(`Adding new event  ${eventName}`);
+        return 1;
     }
     else {
         console.log(`Updated ${result.modifiedCount} event ${eventName}`);
+        return 0;
     }
 }
 
@@ -50,7 +52,7 @@ function composeData(pos, parti) {
 
 async function fetchGraphql(gquery) {
     const token = await userQuery.getValidAccessToken();
-    const response = await fetch('https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql', {
+    const response = await fetch(graphqlUri, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

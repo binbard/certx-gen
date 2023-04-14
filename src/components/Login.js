@@ -30,7 +30,7 @@ export default function Login() {
     }
 
     return (
-        <div class="login">
+        <div className="login">
             <center>
                 <form onSubmit={(e) => handleLogin(e)}>
                     <input
@@ -57,7 +57,7 @@ export default function Login() {
                         </label>
                     </fieldset>
                     <p id="login-msg">Invalid credentials</p>
-                    <button type="submit" class="contrast" onclick="event.preventDefault()">Login</button>
+                    <button type="submit" className="contrast" onclick="event.preventDefault()">Login</button>
                 </form>
             </center>
         </div>
