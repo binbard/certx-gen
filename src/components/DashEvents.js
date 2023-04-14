@@ -2,15 +2,50 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/DashEvents.css'
 
-import userQuery from '../helper/User.js'
+import gql from 'graphql-tag';
+import * as Realm from 'realm-web';
+import updateUtils from '../helper/Updater';
+
+const GET_EVENTS_QUERY = gql`
+  query {
+    events {
+      eventName
+      eventDate
+      totalParticipants
+    }
+  }
+`;
+
+const APP_ID = 'application-0-akmie';
+const app = new Realm.App({ id: APP_ID, baseUrl: 'https://realm.mongodb.com' });
+
+async function getValidAccessToken() {
+    if (!app.currentUser) {
+        await app.logIn(Realm.Credentials.emailPassword('harshitjawla123@gmail.com', 'notok123'));
+    } else {
+        await app.currentUser.refreshAccessToken();
+    }
+    return app.currentUser.accessToken;
+}
+
 
 export default function DashEvents() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    getValidAccessToken().then((token) => {
+        console.log(token);
+        updateUtils.fetchEvents(token).then((data) => {
+            setEventList(data.data.events);
+        })
+    });
+
+    const [eventList, setEventList] = React.useState([]);
+
 
     return (
-        <div class="events">
-            <h2 class="subtitle">Events</h2>
-            <div class="content">
+        <div className="events">
+            <h2 className="subtitle">Events</h2>
+            <div className="content">
                 <table>
                     <thead>
                         <tr>
@@ -21,30 +56,17 @@ export default function DashEvents() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Getting Started with AWS</td>
-                            <td>12 Oct 22</td>
-                            <td>108</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Sustainable Development Workshop</td>
-                            <td>10 Dec 22</td>
-                            <td>94</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Webathon 2.0</td>
-                            <td>5 Apr 23</td>
-                            <td>104</td>
-                        </tr>
+                        {eventList.map((event, index) => (
+                            <tr key={index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{event.eventName}</td>
+                                <td>{event.eventDate}</td>
+                                <td>{event.totalParticipants}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
-
         </div>
-
-    )
-
+    );
 }

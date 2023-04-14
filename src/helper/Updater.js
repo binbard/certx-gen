@@ -57,6 +57,30 @@ function composeData(pos, parti) {
     return data
 }
 
-const updateUtils = { saveEventData, composeData }
+async function fetchEvents(token) {
+    // const token = await Realm.getApp('application-0-akmie').logIn(Realm.Credentials.emailPassword('username', 'password'));
+    const response = await fetch('https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            query: `
+          query {
+            events {
+              eventName
+              eventDate
+              totalParticipants
+            }
+          }
+        `
+        })
+    });
+    return response.json();
+}
+
+
+const updateUtils = { saveEventData, composeData, fetchEvents, Login }
 
 export default updateUtils;

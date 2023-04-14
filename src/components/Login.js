@@ -17,7 +17,7 @@ export default function Login() {
         let rem = document.getElementById("usermem").checked;
 
         if (userid === "admin123" && userpass === "admin123") {
-            userQuery.setUser(userid, userpass, rem)
+            userQuery.login(userid, userpass, rem)
             // alert("Login successful");
             navigate("/");
         }
