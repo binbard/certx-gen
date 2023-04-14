@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import Papa from 'papaparse'
 import '../css/DashAddEvent.css'
 
 import userQuery from '../helper/User.js'
@@ -13,61 +12,41 @@ export default function DashAddEvent() {
 
     const [pos, setPos] = React.useState({ x: 0, y: 0 });
     const [imgx, setImgx] = React.useState(null);
-
-    const eventref = React.useRef(null);
-    const idref = React.useRef(null);
-    const nameref = React.useRef(null);
+    const [participants, setParticipants] = React.useState(null);
 
     function makeDownload() {
-        certUtils.DownloadSample(imgx.src, "Kartik Sharma", pos.x, pos.y);
-    }
-
-    function selectFields() {
-        const fileInput = document.getElementById('file1');
-
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function () {
-            var res = Papa.parse(reader.result, {
-                header: true,
-            });
-            ShowOpt(res.meta.fields)
-            console.log(res)
-        }
-        reader.readAsText(file);
-    }
-
-    function ShowOpt(header) {
-        document.getElementsByClassName('cin')[0].style.display = 'grid';
-        document.getElementById('inputid').innerHTML = header.map((item) => `<option value="${item}">${item}</option>`);
-        document.getElementById('inputname').innerHTML = header.map((item) => `<option value="${item}">${item}</option>`);
+        certUtils.DownloadSample(imgx, "Kartik Sharma", pos.x, pos.y);
     }
 
     return (
         <div class="add-event">
             <h2 class="subtitle">Add Event</h2>
             <div class="content">
-                <form>
+                <form onSubmit={(e) => { e.preventDefault(); certUtils.handleSubmit(pos, participants) }}>
                     <div class="grid">
-                        <label for="event-name">Event Name
-                            <input ref={eventref} type="text" id="firstname" name="firstname" placeholder="ABC Workshop" required />
+                        <label for="event_name">Event Name
+                            <input type="text" id="inputeventname" name="event_name" placeholder="ABC Workshop" required />
                         </label>
                     </div>
 
-                    <label for="file1" onChange={() => selectFields()}>Choose Participant List
-                        <input type="file" id="file1" accept=".csv, .txt" name="file1" required />
+                    <label for="file1">Choose Participant List
+                        <input type="file" id="file1" accept=".csv, .txt" name="file1"
+                            onChange={() => certUtils.selectFields(setParticipants)} required />
                     </label>
 
                     <div class="cin">
                         <sub>Select ID Field:</sub>
                         <sub>Select Name Field:</sub>
-                        <select ref={idref} id="inputid" required></select>
-                        <select ref={nameref} id="inputname" required></select>
+                        <select id="inputid" required
+                            onChange={() => certUtils.updateParticipants(setParticipants)} ></select>
+                        <select id="inputname" required
+                            onChange={() => certUtils.updateParticipants(setParticipants)} ></select>
                     </div>
 
-                    <label for="file2" onChange={() => certUtils.selectPos(setPos, setImgx)}>Choose Certificate Template
-                        <input type="file" id="file2" accept=".png, .jpeg, .jpg" name="file2" required />
+                    <label for="cert">
+                        Choose Certificate Template <a href="https://imgur.com/upload" target="_blank">[Upload & link]</a>
+                        <input type="text" id="inputcert" name="cert" placeholder="https://imgur.com/5toV60A"
+                            onChange={() => certUtils.selectPos(setPos, setImgx)} required />
                     </label>
 
                     <sub id="cview">Select Name position: </sub>
@@ -76,7 +55,7 @@ export default function DashAddEvent() {
                     <img id="tempView" src="" />
 
                     <label for="date">Date
-                        <input type="date" id="date" name="date" required />
+                        <input type="date" id="inputdate" name="date" required />
                     </label>
 
                     <button type="submit">CREATE</button>
@@ -84,7 +63,7 @@ export default function DashAddEvent() {
                 </form>
             </div>
 
-        </div>
+        </div >
 
     )
 
