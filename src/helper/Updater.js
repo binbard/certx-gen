@@ -2,7 +2,7 @@ import * as Realm from 'realm-web';
 import userQuery from './User';
 
 const app = userQuery.app
-const graphqlUri = 'https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql'
+const graphqlUri = `https://ap-south-1.aws.realm.mongodb.com/api/client/v2.0/app/${app.id}/graphql`
 
 async function saveEventData(data) {
     if (!app.currentUser) {
@@ -80,6 +80,6 @@ async function fetchEvents() {
 }
 
 
-const updateUtils = { saveEventData, composeData, fetchEvents }
+const updateUtils = { saveEventData, composeData, fetchEvents, fetchGraphql }
 
 export default updateUtils;

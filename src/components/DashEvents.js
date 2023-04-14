@@ -13,7 +13,10 @@ export default function DashEvents() {
     React.useEffect(() => {
         const fetchData = async () => {
             const data = await eventUtils.getEvents();
-            if (data === null) setEventList([]);
+            if (data === null){
+                console.log("Temporary Blocked")
+                setEventList([]);
+            }
             else setEventList(data);
         }
         fetchData();

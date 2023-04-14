@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
 import '../css/DownloadCert.css'
 
+import downUtils from "../helper/Downloader";
+
+async function getEventsList() {
+    const query = `
+        query {
+            events {
+                eventName
+            }
+        }
+    `
+    const res = await downUtils.fetchGraphql(query)
+    console.log(res)
+    if(res===null) {
+        console.log("Temporary Blocked")
+        return [];
+    }
+    else return res;
+}
+
 export default function DownloadCert() {
     const [events, setEvents] = useState([]);
-
+    
     useEffect(() => {
-        fetch('/graphql', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                query: `
-                    query {
-                        events {
-                            eventName
-                            certificateUrl
-                            xpos
-                            ypos
-                            eventDate
-                            participants
-                            totalParticipants
-                        }
-                    }
-                `
-            })
-        })
-        .then(response => response.json())
-        .then(data => setEvents(data.data.events));
+        getEventsList().then(res => {
+            setEvents(res);
+        });
     }, []);
 
     const handleSubmit = (e) => {
@@ -46,11 +44,12 @@ export default function DownloadCert() {
                     Event:
                     <select name="event">
                         <option value="">--Select an Event--</option>
-                        {events.map(event => (
-                            <option value={event.eventName}>{event.eventName}</option>
+                        {events.map((event,index) => (
+                            <option value={event.eventName} key={index}>{event.eventName}</option>
                         ))}
                     </select>
                 </label>
+                <p id="down-msg"></p>
                 <button type="submit">Submit</button>
             </form>
         </div>
