@@ -7,7 +7,6 @@ const app = userQuery.app
 async function saveEventData(data) {
     if (!app.currentUser) {
         console.log("No user logged in");
-        // await app.logIn(Realm.Credentials.emailPassword('harshitjawla123@gmail.com', 'notok123'));
     }
     else console.log("Already logged in")
     const user = app.currentUser;

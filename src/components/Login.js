@@ -16,16 +16,19 @@ export default function Login() {
         let userpass = document.getElementById("userpass").value;
         let rem = document.getElementById("usermem").checked;
 
-        if(await userQuery.login(userid, userpass, rem) == true) {
+
+        let loggedIn = await userQuery.login(userid, userpass, rem);
+
+        if (loggedIn === true) {
             navigate("/dashboard");
         }
-        else{
-            alert("Invalid credentials");
+        else {
+            document.getElementById("login-msg").style.display = "block";
         }
     }
 
     return (
-        <div class="card">
+        <div class="login">
             <center>
                 <form onSubmit={(e) => handleLogin(e)}>
                     <input
@@ -51,6 +54,7 @@ export default function Login() {
                             Remember me
                         </label>
                     </fieldset>
+                    <p id="login-msg">Invalid credentials</p>
                     <button type="submit" class="contrast" onclick="event.preventDefault()">Login</button>
                 </form>
             </center>

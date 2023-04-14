@@ -9,8 +9,11 @@ export default function Home() {
         <div class="home">
             <div class="content">
                 <h1>
-                    Certx Gen - The Ultimate Certificate Generator
+                    eCertify - The Ultimate Certificate Generator
                 </h1>
+                <button>
+                    <a href="/download" id="btn-gs">Download your Certificate</a>
+                </button>
                 <ul>
                     <li>
                         <p>

@@ -36,11 +36,16 @@ function getUser() {
 }
 
 async function login(userid, userpass, rem) {
-    const user = await app.logIn(Realm.Credentials.emailPassword(userid, userpass));
-    console.log(user)
-    setUser(userid, userpass, rem);
-    console.log("Logged in")
-    return true;
+    try {
+        const user = await app.logIn(Realm.Credentials.emailPassword(userid, userpass));
+        console.log(user)
+        setUser(userid, userpass, rem)
+        return true
+    }
+    catch (err) {
+        console.log(err)
+        return false
+    }
 }
 
 function isLoggedIn() {
