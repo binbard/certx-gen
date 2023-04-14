@@ -9,20 +9,18 @@ export default function Login() {
 
     const navigate = useNavigate()
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
         e.preventDefault();
 
         let userid = document.getElementById("userid").value;
         let userpass = document.getElementById("userpass").value;
         let rem = document.getElementById("usermem").checked;
 
-        if (userid === "admin123" && userpass === "admin123") {
-            userQuery.login(userid, userpass, rem)
-            // alert("Login successful");
-            navigate("/");
+        if(await userQuery.login(userid, userpass, rem) == true) {
+            navigate("/dashboard");
         }
-        else {
-            alert("Wrong credentials");
+        else{
+            alert("Invalid credentials");
         }
     }
 
@@ -35,7 +33,6 @@ export default function Login() {
                         name="login"
                         placeholder="Login"
                         autocomplete="id"
-                        maxLength="10"
                         id="userid"
                         required
                     />
@@ -45,7 +42,7 @@ export default function Login() {
                         placeholder="Password"
                         autocomplete="password"
                         id="userpass"
-                        maxLength="10"
+                        minLength="3"
                         required
                     />
                     <fieldset>

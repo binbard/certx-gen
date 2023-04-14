@@ -10,13 +10,16 @@ import DashAddEvent from './DashAddEvent.js';
 export default function Dashboard() {
     const navigate = useNavigate()
 
-    let isLoggedIn = userQuery.isLoggedIn()
+    const [isLoggedIn, setIsLoggedIn] = React.useState(userQuery.isLoggedIn());
 
-    if (isLoggedIn === false) {
-        alert("You are not logged in!")
-        navigate("/");
-        window.location.href = "/"
-    }
+    React.useState(() => {
+        setIsLoggedIn();
+        if (isLoggedIn === false) {
+            alert("You are not logged in!")
+            navigate("/");
+            window.location.href = "/"
+        }
+    }, []);
 
     return (
         <div class="dashboard">

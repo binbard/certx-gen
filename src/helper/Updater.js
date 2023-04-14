@@ -57,8 +57,7 @@ function composeData(pos, parti) {
     return data
 }
 
-async function fetchEvents(token) {
-    // const token = await Realm.getApp('application-0-akmie').logIn(Realm.Credentials.emailPassword('username', 'password'));
+async function fetchGraphql(token, gquery) {
     const response = await fetch('https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql', {
         method: 'POST',
         headers: {
@@ -66,18 +65,23 @@ async function fetchEvents(token) {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            query: `
-          query {
-            events {
-              eventName
-              eventDate
-              totalParticipants
-            }
-          }
-        `
+            query: gquery
         })
     });
     return response.json();
+}
+
+async function fetchEvents(token) {
+    const query = `
+        query {
+        events {
+            eventName
+            eventDate
+            totalParticipants
+        }
+        }
+    `
+    return await fetchGraphql(token, query);
 }
 
 

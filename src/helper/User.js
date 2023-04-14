@@ -2,6 +2,18 @@ import * as Realm from "realm-web";
 
 const userInfo = {}
 
+const APP_ID = 'application-0-akmie';
+const app = new Realm.App({ id: APP_ID, baseUrl: 'https://realm.mongodb.com' });
+
+async function getValidAccessToken() {
+    if (!app.currentUser) {
+        await app.logIn(Realm.Credentials.emailPassword(userInfo.userid,userInfo.userpass));
+    } else {
+        await app.currentUser.refreshAccessToken();
+    }
+    return app.currentUser.accessToken;
+}
+
 function setUser(userid, userpass, rem) {
     if (userid == undefined || userpass == undefined) { return }
     if (rem == true) {
@@ -22,12 +34,12 @@ function getUser() {
     return userInfo.userid;
 }
 
-function login(userid, userpass, rem) {
-    setUser(userid, userpass, rem)
-
-    if (getUser() != undefined) {
-        return true;
-    }
+async function login(userid, userpass, rem) {
+    const user = await app.logIn(Realm.Credentials.emailPassword(userid, userpass));
+    console.log(user)
+    setUser(userid, userpass, rem);
+    console.log("Logged in")
+    return true;
 }
 
 function isLoggedIn() {
@@ -43,18 +55,6 @@ function isLoggedIn() {
     return false;
 }
 
-// async function getValidAccessToken() {
-//     if (!isLoggedIn()) {
-//         return null;
-//     }
-//     if (!app.currentUser) {
-//         await app.logIn(Realm.Credentials.emailPassword(userInfo.userid, userInfo.userpass));
-//     } else {
-//         await app.currentUser.refreshAccessToken();
-//     }
-//     return app.currentUser.accessToken;
-// }
-
 function logout() {
     userInfo.userid = undefined;
     userInfo.userpass = undefined;
@@ -63,6 +63,6 @@ function logout() {
     window.location.href = "/"
 }
 
-const userQuery = { setUser, getUser, isLoggedIn, logout }
+const userQuery = { setUser, getUser, isLoggedIn, logout, login, getValidAccessToken, app }
 
 export default userQuery

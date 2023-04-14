@@ -5,39 +5,20 @@ import '../css/DashEvents.css'
 import gql from 'graphql-tag';
 import * as Realm from 'realm-web';
 import updateUtils from '../helper/Updater';
+import userQuery from '../helper/User';
 
-const GET_EVENTS_QUERY = gql`
-  query {
-    events {
-      eventName
-      eventDate
-      totalParticipants
-    }
-  }
-`;
-
-const APP_ID = 'application-0-akmie';
-const app = new Realm.App({ id: APP_ID, baseUrl: 'https://realm.mongodb.com' });
-
-async function getValidAccessToken() {
-    if (!app.currentUser) {
-        await app.logIn(Realm.Credentials.emailPassword('harshitjawla123@gmail.com', 'notok123'));
-    } else {
-        await app.currentUser.refreshAccessToken();
-    }
-    return app.currentUser.accessToken;
-}
 
 
 export default function DashEvents() {
     const navigate = useNavigate();
-
-    getValidAccessToken().then((token) => {
-        console.log(token);
-        updateUtils.fetchEvents(token).then((data) => {
-            setEventList(data.data.events);
-        })
-    });
+    
+    React.useState(() => {
+        userQuery.getValidAccessToken().then((token) => {
+            updateUtils.fetchEvents(token).then((data) => {
+                setEventList(data.data.events);
+            })
+        });
+    }, []);
 
     const [eventList, setEventList] = React.useState([]);
 
