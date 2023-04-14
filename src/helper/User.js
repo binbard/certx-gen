@@ -7,7 +7,8 @@ const app = new Realm.App({ id: APP_ID, baseUrl: 'https://realm.mongodb.com' });
 
 async function getValidAccessToken() {
     if (!app.currentUser) {
-        await app.logIn(Realm.Credentials.emailPassword(userInfo.userid,userInfo.userpass));
+        console.log("User logged in")
+        // await app.logIn(Realm.Credentials.emailPassword(userInfo.userid,userInfo.userpass));
     } else {
         await app.currentUser.refreshAccessToken();
     }

@@ -2,25 +2,22 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/DashEvents.css'
 
-import gql from 'graphql-tag';
-import * as Realm from 'realm-web';
-import updateUtils from '../helper/Updater';
-import userQuery from '../helper/User';
-
+import eventUtils from '../helper/Events';
 
 
 export default function DashEvents() {
     const navigate = useNavigate();
-    
-    React.useState(() => {
-        userQuery.getValidAccessToken().then((token) => {
-            updateUtils.fetchEvents(token).then((data) => {
-                setEventList(data.data.events);
-            })
-        });
-    }, []);
 
     const [eventList, setEventList] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const data = await eventUtils.getEvents();
+            if (data === undefined) setEventList([]);
+            else setEventList(data);
+        }
+        fetchData();
+    }, []);
 
 
     return (

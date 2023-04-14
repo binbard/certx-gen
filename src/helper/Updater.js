@@ -1,22 +1,15 @@
 import * as Realm from 'realm-web';
+import userQuery from './User';
 
-const app = new Realm.App({ id: 'application-0-akmie', baseUrl: 'https://realm.mongodb.com' });
+const app = userQuery.app
 
-function Login({ setUser, app }) {
-    const loginAnonymous = async () => {
-        const user = await app.logIn(Realm.Credentials.anonymous());
-        setUser(user);
-    };
-    const loginUser = async () => {
-        const email = "goonhacker0@gmail.com";
-        const password = "pahgal123";
-        const user = Realm.Credentials(Realm.Credentials.emailPassword(email, password));
-        setUser(user);
-    };
-}
 
 async function saveEventData(data) {
-    await app.logIn(Realm.Credentials.emailPassword('harshitjawla123@gmail.com', 'notok123'));
+    if (!app.currentUser) {
+        console.log("No user logged in");
+        // await app.logIn(Realm.Credentials.emailPassword('harshitjawla123@gmail.com', 'notok123'));
+    }
+    else console.log("Already logged in")
     const user = app.currentUser;
 
     const mongodb = app.currentUser.mongoClient('mongodb-atlas');
@@ -53,11 +46,11 @@ function composeData(pos, parti) {
         participants: parti,
         totalParticipants: parti.length
     }
-
     return data
 }
 
-async function fetchGraphql(token, gquery) {
+async function fetchGraphql(gquery) {
+    const token = await userQuery.getValidAccessToken();
     const response = await fetch('https://realm.mongodb.com/api/client/v2.0/app/application-0-akmie/graphql', {
         method: 'POST',
         headers: {
@@ -68,10 +61,11 @@ async function fetchGraphql(token, gquery) {
             query: gquery
         })
     });
-    return response.json();
+    const res = await response.json();
+    return res;
 }
 
-async function fetchEvents(token) {
+async function fetchEvents() {
     const query = `
         query {
         events {
@@ -81,10 +75,10 @@ async function fetchEvents(token) {
         }
         }
     `
-    return await fetchGraphql(token, query);
+    return await fetchGraphql(query);
 }
 
 
-const updateUtils = { saveEventData, composeData, fetchEvents, Login }
+const updateUtils = { saveEventData, composeData, fetchEvents }
 
 export default updateUtils;
