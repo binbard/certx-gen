@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import '@picocss/pico'
 import '../css/Nav.css'
 
@@ -7,10 +7,31 @@ import userQuery from '../helper/User.js'
 
 export default function Nav() {
     const navigate = useNavigate()
+    const location = useLocation()
 
-    let isLoggedIn = userQuery.isLoggedIn()
-    // alert(isLoggedIn)
-    let userid = userQuery.getUser()
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+    const [userid, setUserid] = React.useState("")
+    const [navText, setNavText] = React.useState("")
+    const [RedirectTo, setRedirectTo] = React.useState("")
+
+    React.useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/dashboard/events")
+        }
+    }, [isLoggedIn])
+
+    React.useEffect(() => {
+        if(location.pathname==='/dashboard/'){
+            navigate('/dashboard/events')
+        }
+        if (location.pathname === "/download") {
+            setNavText("≡")
+            setRedirectTo("/download")
+        } else {
+            setNavText("Admin Login")
+            setRedirectTo(location.pathname !== "/login" ? "/login" : "")
+        }
+    }, [location])
 
     return (
         <nav>
@@ -21,15 +42,21 @@ export default function Nav() {
                 <li><>eCertify</></li>
             </ul>
             {isLoggedIn ? (
-                    <ul>
-                        <li><a href="#" className="secondary" onClick={() => { navigate("/dashboard/events") }}>
-                        <sup>({userid}) </sup>
+                <ul>
+                    <li>
+                        <a href="#" className="secondary" onClick={() => { navigate("/dashboard/events") }}>
+                            <sup>({userid}) </sup>
                             Dashboard
-                            </a></li>
-                    </ul>
+                        </a>
+                    </li>
+                </ul>
             ) : (
                 <ul>
-                    <li><a href="#" className="secondary" onClick={() => { navigate("/login") }}>Login</a></li>
+                    <li>
+                        <a href="#" className="secondary" onClick={() => { navigate(RedirectTo) }}>
+                            {navText}
+                        </a>
+                    </li>
                 </ul>
             )}
         </nav>

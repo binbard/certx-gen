@@ -17,17 +17,26 @@ export default function DownloadCert() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const pid = e.target.pid.value;
-        const eventId = events[e.target.event.selectedIndex - 1]._id;
 
         const msg = document.getElementById("down-msg");
         const dbtn = document.getElementById("down-btn");
 
-        const certDetails = await downUtils.getMatchedCert(pid, eventId);
-        setCertDetails(certDetails);
-        console.log(certDetails);
-        if (certDetails.status === "success") {
-            msg.innerText = "Certificate found!";
+        const pid = e.target.pid.value;
+
+        if(pid==='' || e.target.event.selectedIndex === 0){
+            msg.innerText = "Please fill all the fields !!";
+            msg.style.color = "red";
+            msg.style.visibility = "visible";
+            dbtn.style.visibility = "hidden";
+            return;
+        }
+        const eventId = events[e.target.event.selectedIndex - 1]._id;
+
+        const certInfo = await downUtils.getMatchedCert(pid, eventId);
+        setCertDetails(certInfo.data);
+        console.log(certInfo);
+        if (certInfo.status === "success") {
+            msg.innerText = "Certificate found for " + certInfo.data.participantName + "";
             msg.style.color = "green";
             dbtn.style.visibility = "visible";
         }
@@ -60,7 +69,7 @@ export default function DownloadCert() {
                 <p id="down-msg">X</p>
 
             </form>
-            <button id="down-btn">Download</button>
+            <button id="down-btn" onClick={()=>downUtils.makeCert(certDetails)}>Download</button>
         </div>
     );
 };
