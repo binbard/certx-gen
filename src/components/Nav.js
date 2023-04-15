@@ -9,19 +9,14 @@ export default function Nav() {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
-    const [userid, setUserid] = React.useState("")
+    const [isLoggedIn, setIsLoggedIn] = React.useState(userQuery.isLoggedIn())
+    const [userid, setUserid] = React.useState(userQuery.getUser())
     const [navText, setNavText] = React.useState("")
     const [RedirectTo, setRedirectTo] = React.useState("")
 
-    React.useEffect(() => {
-        if (isLoggedIn) {
-            navigate("/dashboard/events")
-        }
-    }, [isLoggedIn])
 
     React.useEffect(() => {
-        if(location.pathname==='/dashboard/'){
+        if (location.pathname === '/dashboard') {
             navigate('/dashboard/events')
         }
         if (location.pathname === "/download") {
