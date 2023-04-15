@@ -43,6 +43,7 @@ export default function DownloadCert() {
         else {
             msg.innerText = "No certificate found";
             msg.style.color = "red";
+            dbtn.style.visibility = "hidden";
         }
         msg.style.visibility = "visible";
     };

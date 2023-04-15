@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import DashEvents from "./components/DashEvents";
 import DashAddEvent from "./components/DashAddEvent";
 import DownloadCert from "./components/DownloadCert";
+import DashSettings from "./components/DashSettings";
 
 function MRouter() {
     return (
@@ -18,7 +19,7 @@ function MRouter() {
             <Route path="dashboard" element={<Dashboard />} >
                 <Route path="events" element={<DashEvents />} />
                 <Route path="add-event" element={<DashAddEvent />} />
-                <Route path="settings" element={<DashEvents />} />
+                <Route path="settings" element={<DashSettings />} />
             </Route>
             <Route path="download" element={<DownloadCert />} />
         </Routes>
