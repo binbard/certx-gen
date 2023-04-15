@@ -5,6 +5,8 @@ const app = new Realm.App({ id: APP_ID });
 
 const graphqlUri = `https://ap-south-1.aws.realm.mongodb.com/api/client/v2.0/app/${APP_ID}/graphql`
 
+const mendpoint = 'https://ap-south-1.aws.data.mongodb-api.com/app/application-0-akmie/endpoint'
+
 async function getDownAccessToken() {
     if (!app.currentUser) {
         console.log("Logged in anonymously")
@@ -25,18 +27,46 @@ async function fetchGraphql(gquery) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-            query: gquery
-        })
+        body: gquery
     });
     const res = await response.json();
-    if(res.data===undefined) {
+    console.log(res)
+    if (res.data === undefined) {
         console.log("Temporary Blocked")
         return null
     }
-    return res.data.events
+    return res.data
 }
 
-const downUtils = { fetchGraphql }
+async function getEventsList() {
+    const query = `
+        query {
+            events {
+                _id
+                eventName
+            }
+        }
+    `
+    const gquery = JSON.stringify({ query })
+    const response = await downUtils.fetchGraphql(gquery)
+    if (response === null) return null;
+    else return response.events;
+}
+
+async function getMatchedCert(pid, eventId) {
+    console.log(pid, eventId)
+    if (pid=='' || eventId=='' || eventId==undefined) return null;
+    const endpointUri = mendpoint + '/get_cert' + `?eventId=${eventId}&participantId=${pid}`
+    console.log(endpointUri)
+    const response = await fetch(endpointUri);
+    if (!response) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const res = await response.json();
+    return res;
+}
+
+
+const downUtils = { fetchGraphql, getEventsList, getMatchedCert }
 
 export default downUtils;
