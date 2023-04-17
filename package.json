@@ -22,6 +22,7 @@
   "scripts": {
     "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "pub": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build && surge build https://ecertify.surge.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

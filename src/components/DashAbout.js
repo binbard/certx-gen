@@ -26,7 +26,7 @@ export default function DashSettings() {
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <td>An <b>ID field</b> and a name should be set from <b>header fields</b>. Certificate can be downloaded by entering one of the id ni this field.</td>
+                        <td>An <b>ID field</b> and a <b>Name field</b> should be set from <b>header fields</b>. Certificate can be downloaded by entering one of the id in this field.</td>
                     </tr>
                     <tr>
                         <th scope="row">3</th>
