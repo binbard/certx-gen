@@ -2,8 +2,11 @@ import React from 'react'
 import '../css/Home.css'
 
 import userInfo from '../helper/User.js'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Home() {
+
+    const navigate = useNavigate()
 
     return (
         <div className="home">
@@ -12,7 +15,7 @@ export default function Home() {
                     eCertify - The Ultimate Certificate Generator
                 </h1>
                 <button>
-                    <a href="download" id="btn-gs">Download your Certificate</a>
+                    <a id="btn-gs" onClick={()=>navigate("download")}>Download your Certificate</a>
                 </button>
                 <br /><br />
                 <ul>

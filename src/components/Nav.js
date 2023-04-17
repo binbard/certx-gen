@@ -9,29 +9,13 @@ export default function Nav() {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(userQuery.isLoggedIn())
-    const [userid, setUserid] = React.useState(userQuery.getUser())
-    const [navText, setNavText] = React.useState("")
-    const [RedirectTo, setRedirectTo] = React.useState("")
-
-
-    React.useEffect(() => {
-        if (location.pathname === '/dashboard') {
-            navigate('/dashboard/events')
-        }
-        if (location.pathname === "/download") {
-            setNavText("≡")
-            setRedirectTo("/download")
-        } else {
-            setNavText("Admin Login")
-            setRedirectTo(location.pathname !== "/login" ? "/login" : "")
-        }
-    }, [location])
+    const isLoggedIn = userQuery.isLoggedIn()
+    const userid = userQuery.getUser()
 
     return (
         <nav>
             <ul>
-                <li><a href="#" className="secondary" onClick={() => { navigate("/") }}>Home</a></li>
+                <li><a className="secondary" onClick={() => { navigate("/") }}>Home</a></li>
             </ul>
             <ul>
                 <li><>eCertify</></li>
@@ -39,7 +23,7 @@ export default function Nav() {
             {isLoggedIn ? (
                 <ul>
                     <li>
-                        <a href="#" className="secondary" onClick={() => { navigate("/dashboard/events") }}>
+                        <a className="secondary" onClick={() => { navigate("/dashboard/events") }}>
                             <sup>({userid}) </sup>
                             Dashboard
                         </a>
@@ -48,8 +32,8 @@ export default function Nav() {
             ) : (
                 <ul>
                     <li>
-                        <a href="#" className="secondary" onClick={() => { navigate(RedirectTo) }}>
-                            {navText}
+                        <a className="secondary" onClick={() => { navigate('/login') }}>
+                            Admin Login
                         </a>
                     </li>
                 </ul>
