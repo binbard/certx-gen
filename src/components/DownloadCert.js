@@ -54,7 +54,7 @@ export default function DownloadCert() {
             <form onSubmit={handleSubmit}>
                 <h2>Download Certificate</h2>
                 <label htmlFor="pid">Enter your id:
-                    <input name="pid" type="text" />
+                    <input name="pid" placeholder="prachib2021@gmail.com"  type="text" />
                 </label>
                 <label htmlFor="event">
                     Event:

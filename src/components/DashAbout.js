@@ -39,7 +39,7 @@ export default function DashSettings() {
                     </tr>
                     <tr>
                         <th scope="row">6</th>
-                        <td>To update an event, you can add a new event with the same name but different details. You can also update an event immediately just after Creating</td>
+                        <td>To <b>update an event</b>, you can add a new event with the same name but different details. You can also update an event immediately just after Creating.</td>
                     </tr>
                 </tbody>
             </table>
