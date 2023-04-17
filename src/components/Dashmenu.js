@@ -23,7 +23,7 @@ export default function Dashmenu() {
                 <ul>
                     <li><a href="#" className="secondary" onClick={() => navigate('/dashboard/events')}>Events</a></li>
                     <li><a href="#" className="secondary" onClick={() => navigate('/dashboard/add-event')}>Add Event</a></li>
-                    <li><a href="#" className="secondary"  onClick={() => navigate('/dashboard/settings')}>Settings</a></li>
+                    <li><a href="#" className="secondary"  onClick={() => navigate('/dashboard/settings')}>How to use</a></li>
                     <li><a href="#" className="secondary"  onClick={() => userInfo.logout()}>Logout</a></li>
                 </ul>
             </div>

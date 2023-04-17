@@ -28,7 +28,7 @@ export default function DashAddEvent() {
                         </label>
                     </div>
 
-                    <label htmlFor="file1">Choose Participant List
+                    <label htmlFor="file1">Choose Participant List: <br/>(must have header row with id & name fields)
                         <input type="file" id="file1" accept=".csv, .txt" name="file1"
                             onChange={() => certUtils.selectFields(setParticipants)} required />
                     </label>
@@ -44,7 +44,7 @@ export default function DashAddEvent() {
 
                     <label htmlFor="cert">
                         Certificate Link [<a href="https://imgur.com/upload" target="_blank">Upload</a> & paste shareable link]
-                        <input type="text" id="inputcert" name="cert" placeholder="https://imgur.com/5toV60A"
+                        <input type="text" id="inputcert" name="cert" placeholder="https://imgur.com/5toV6lA"
                             onChange={() => certUtils.selectPos(setPos, setImgx)} required />
                     </label>
 
