@@ -1,65 +1,22 @@
-import * as Realm from 'realm-web';
 import jsPDF from 'jspdf';
 
-const APP_ID = 'application-0-akmie';
-const app = new Realm.App({ id: APP_ID });
 
-const graphqlUri = `https://ap-south-1.aws.realm.mongodb.com/api/client/v2.0/app/${APP_ID}/graphql`
+const endpoint = 'https://ap-south-1.aws.data.mongodb-api.com/app/application-0-akmie/endpoint'
 
-const mendpoint = 'https://ap-south-1.aws.data.mongodb-api.com/app/application-0-akmie/endpoint'
-
-async function getDownAccessToken() {
-    if (!app.currentUser) {
-        console.log("Logged in anonymously")
-        await app.logIn(Realm.Credentials.anonymous());
-    } else {
-        console.log("Refreshing acc")
-        await app.currentUser.refreshAccessToken();
-    }
-    console.log(app.currentUser)
-    return app.currentUser.accessToken;
-}
-
-async function fetchGraphql(gquery) {
-    const token = await getDownAccessToken();
-    const response = await fetch(graphqlUri, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: gquery
-    });
-    const res = await response.json();
-    // console.log(res)
-    if (res.data === undefined) {
-        console.log("Temporary Blocked")
-        return null
-    }
-    return res.data
-}
 
 async function getEventsList() {
-    const query = `
-        query {
-            events {
-                _id
-                eventName
-            }
-        }
-    `
-    const gquery = JSON.stringify({ query })
-    const response = await downUtils.fetchGraphql(gquery)
-    if (response === null) return null;
-    else return response.events;
+    const url = endpoint + '/allevents'
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.data;
 }
 
 async function getMatchedCert(pid, eventId) {
     console.log(pid, eventId)
     if (pid == '' || eventId == '' || eventId == undefined) return null;
-    const endpointUri = mendpoint + '/get_cert' + `?eventId=${eventId}&participantId=${pid}`
-    console.log(endpointUri)
-    const response = await fetch(endpointUri);
+    const url = endpoint + '/get_cert' + `?eventId=${eventId}&participantId=${pid}`
+    console.log(url)
+    const response = await fetch(url);
     if (!response) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -90,10 +47,9 @@ async function makeCert(certDetails) {
 
         doc.save(`${participantName}.pdf`);
     }
-
 }
 
 
-const downUtils = { fetchGraphql, getEventsList, getMatchedCert, makeCert }
+const downUtils = { getEventsList, getMatchedCert, makeCert }
 
 export default downUtils;

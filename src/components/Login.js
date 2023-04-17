@@ -20,7 +20,7 @@ export default function Login() {
         let loggedIn = await userQuery.login(userid, userpass, rem);
 
         if (loggedIn === true) {
-            navigate("/dashboard");
+            navigate("/dashboard/events");
         }
         else {
             let msg = document.getElementById("login-msg");

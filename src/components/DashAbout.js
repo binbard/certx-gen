@@ -10,6 +10,9 @@ export default function DashSettings() {
                     <b>➼</b> Made with <b>React</b> but with no other fancy css frameworks.
                 </li>
                 <li>
+                    <b>➼</b> Certificates are generated <b>on-the-fly</b> when user details are matched with database.
+                </li>
+                <li>
                     <b>➼</b> Used <b>Graphql</b> for fetching data along with <b>mongodb</b>, so it would be fairly easy to extend
                 </li>
             </ul>
